@@ -1,5 +1,5 @@
 {
-  "name": "sequelize-test",
+  "name": "sequelize-start",
   "version": "1.0.0",
   "type": "commonjs",
   "description": "",
@@ -14,6 +14,10 @@
     "dotenv": "^16.1.4",
     "pg": "^8.11.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.32.0"
+    "sequelize": "^6.32.0",
+    "sequelize-auto-models": "^0.2.14"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3"
   }
 }

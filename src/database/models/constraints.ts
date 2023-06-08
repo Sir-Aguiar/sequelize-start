@@ -95,10 +95,12 @@ CustomerCustomerDemo.hasOne(Customers, {
   sourceKey: "customer_id",
 });
 
-/* Employees.hasOne(Employees, {
+Employees.hasOne(Employees, {
   foreignKey: "reports_to",
 });
 
+
+/* 
 Employees.findAll({ include: [{ model: Employees }] }).then((res) => {
   console.log(res[0].toJSON());
 });

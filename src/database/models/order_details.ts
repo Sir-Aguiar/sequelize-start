@@ -8,19 +8,11 @@ export const OrderDetails = Northwind.define("order_details", {
     type: DataTypes.SMALLINT,
     primaryKey: true,
     allowNull: false,
-    references: {
-      model: Orders,
-      key: "order_id",
-    },
   },
   product_id: {
     type: DataTypes.SMALLINT,
     primaryKey: true,
     allowNull: false,
-    references: {
-      model: Products,
-      key: "product_id",
-    },
   },
   unit_price: {
     type: DataTypes.REAL,
@@ -35,3 +27,46 @@ export const OrderDetails = Northwind.define("order_details", {
     allowNull: false,
   },
 });
+
+Products.belongsToMany(Orders, {
+  through: {
+    model: OrderDetails,
+  },
+  constraints: true,
+  foreignKey: "product_id",
+});
+
+Orders.belongsToMany(Products, {
+  through: {
+    model: OrderDetails,
+  },
+  constraints: true,
+  foreignKey: "order_id",
+});
+
+Products.hasMany(OrderDetails, { foreignKey: "product_id" });
+OrderDetails.belongsTo(Products, { foreignKey: "product_id" });
+
+Orders.hasMany(OrderDetails, { foreignKey: "order_id" });
+OrderDetails.belongsTo(Orders, { foreignKey: "order_id" });
+
+/* (async () => {
+  const result = await OrderDetails.findAll({
+    where: {
+      order_id: "10248",
+    },
+    include: [Products, Orders],
+  });
+  console.log(result);
+})();
+ */
+/* 
+(async () => {
+  const result = await OrderDetails.findAll({
+    where: {
+      order_id: "10248",
+    },
+    include: [Products, Orders],
+  });
+})();
+ */

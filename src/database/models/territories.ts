@@ -13,11 +13,33 @@ export const Territories = Northwind.define("territories", {
     type: DataTypes.STRING(60),
   },
   region_id: {
-    allowNull: false,
     type: DataTypes.SMALLINT,
-    references: {
-      model: Region,
-      key: "region_id",
-    },
+    allowNull: false,
   },
 });
+
+Territories.belongsTo(Region, {
+  constraints: true,
+  foreignKey: "region_id",
+});
+
+Region.hasMany(Territories, {
+  foreignKey: "region_id",
+});
+
+/* 
+(async () => {
+  const result = await Territories.findByPk("01581", { include: Region });
+  console.log(result?.toJSON());
+})(); */
+
+/*
+
+  (errado)
+  Um território possui apenas a uma região
+  Uma região pertence a vários territórios
+
+  (certo)
+  Um território, pertence apenas a uma região
+  Uma região, possui vários territórios
+*/

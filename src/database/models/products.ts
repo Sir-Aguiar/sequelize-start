@@ -1,7 +1,9 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Op } from "sequelize";
 import Northwind from "../database";
 import { Categories } from "./categories";
 import { Suppliers } from "./suppliers";
+import { OrderDetails } from "./order_details";
+import { Orders } from "./orders";
 
 export const Products = Northwind.define("products", {
   product_id: {
@@ -15,17 +17,9 @@ export const Products = Northwind.define("products", {
   },
   supplier_id: {
     type: DataTypes.SMALLINT,
-    references: {
-      model: Suppliers,
-      key: "supplier_id",
-    },
   },
   category_id: {
     type: DataTypes.SMALLINT,
-    references: {
-      model: Categories,
-      key: "category_id",
-    },
   },
   quantity_per_unit: {
     type: DataTypes.STRING(20),
@@ -46,4 +40,33 @@ export const Products = Northwind.define("products", {
     type: DataTypes.INTEGER,
   },
 });
+
+Products.belongsTo(Categories, {
+  constraints: true,
+  foreignKey: "category_id",
+});
+Categories.hasMany(Products, {
+  foreignKey: "category_id",
+});
+
+Products.belongsTo(Suppliers, {
+  constraints: true,
+  foreignKey: "supplier_id",
+});
+Suppliers.hasMany(Products, {
+  foreignKey: "supplier_id",
+});
+
+
+/* (async () => {
+  const product_category = await Products.findByPk(1, { include: Categories });
+  console.log(product_category?.toJSON());
+  const product_supplier = await Products.findByPk(1, { include: Suppliers });
+  console.log(product_supplier?.toJSON());
+})(); */
+
+/*
+  Uma categória tem mais de um produto
+  Um produto pertence apenas a uma categoria
+*/
 

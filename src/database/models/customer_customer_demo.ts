@@ -8,19 +8,28 @@ export const CustomerCustomerDemo = Northwind.define("customer_customer_demo", {
     type: DataTypes.STRING(5),
     allowNull: false,
     primaryKey: true,
-
-    references: {
-      model: Customers,
-      key: "customer_id",
-    },
   },
   customer_type_id: {
     type: DataTypes.STRING(5),
     allowNull: false,
     primaryKey: true,
-    references: {
-      model: CustomerDemographics,
-      key: "customer_type_id",
-    },
   },
 });
+
+CustomerDemographics.belongsToMany(Customers, {
+  through: CustomerCustomerDemo,
+  constraints: true,
+  foreignKey: "customer_type_id",
+});
+
+Customers.belongsToMany(CustomerDemographics, {
+  through: CustomerCustomerDemo,
+  constraints: true,
+  foreignKey: "customer_id",
+});
+
+Customers.hasMany(CustomerDemographics, { foreignKey: "customer_id" });
+CustomerDemographics.belongsTo(Customers, { foreignKey: "customer_id" });
+
+CustomerDemographics.hasMany(Customers, { foreignKey: "customer_type_id" });
+Customers.belongsTo(CustomerDemographics, { foreignKey: "customer_type_id" });

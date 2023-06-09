@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, or } from "sequelize";
 import Northwind from "../database";
 import { Customers } from "./customers";
 import { Shippers } from "./shippers";
@@ -50,3 +50,38 @@ export const Orders = Northwind.define("orders", {
     type: DataTypes.STRING(15),
   },
 });
+
+Orders.belongsTo(Customers, {
+  constraints: true,
+  foreignKey: "customer_id",
+});
+Customers.hasMany(Orders, {
+  foreignKey: "customer_id",
+});
+
+Orders.belongsTo(Employees, {
+  constraints: true,
+  foreignKey: "employee_id",
+});
+Employees.hasMany(Orders, {
+  foreignKey: "employee_id",
+});
+
+Orders.belongsTo(Shippers, {
+  constraints: true,
+  foreignKey: "ship_via",
+});
+Shippers.hasMany(Orders, {
+  foreignKey: "ship_via",
+});
+
+/* (async () => {
+  const order_customer = await Orders.findByPk("10248", { include: Customers });
+  console.log(order_customer?.toJSON());
+
+  const order_employee = await Orders.findByPk("10248", { include: Employees });
+  console.log(order_employee?.toJSON());
+
+  const order_shipper = await Orders.findByPk("10248", { include: Shippers });
+  console.log(order_shipper?.toJSON());
+})(); */

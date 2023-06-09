@@ -1,5 +1,7 @@
 import Northwind from "../database";
 import { DataTypes } from "sequelize";
+import { EmployeeTerritories } from "./employee_territories";
+import { Territories } from "./territories";
 
 /*
 Models are the essence of Sequelize. A model is an abstraction that represents a table in your database. In Sequelize, it is a class that extends Model.
@@ -24,25 +26,24 @@ export const Employees = Northwind.define("employees", {
     type: DataTypes.STRING(10),
     allowNull: false,
   },
-  title: {
-    type: DataTypes.STRING(30),
-  },
-  title_of_courtesy: {
-    type: DataTypes.STRING(25),
-  },
-  birth_date: { type: DataTypes.DATE },
-  hire_date: { type: DataTypes.DATE },
-  address: { type: DataTypes.STRING(60) },
-  city: { type: DataTypes.STRING(15) },
-  region: { type: DataTypes.STRING(15) },
-  postal_code: { type: DataTypes.STRING(10) },
-  country: { type: DataTypes.STRING(15) },
-  home_phone: { type: DataTypes.STRING(24) },
-  extension: { type: DataTypes.STRING(4) },
-  photo: { type: DataTypes.BLOB },
-  notes: { type: DataTypes.TEXT },
-  reports_to: {
-    type: DataTypes.SMALLINT,
-  },
-  photo_path: { type: DataTypes.STRING(255) },
+  title: DataTypes.STRING(30),
+  title_of_courtesy: DataTypes.STRING(25),
+  birth_date: DataTypes.DATE,
+  hire_date: DataTypes.DATE,
+  address: DataTypes.STRING(60),
+  city: DataTypes.STRING(15),
+  region: DataTypes.STRING(15),
+  postal_code: DataTypes.STRING(10),
+  country: DataTypes.STRING(15),
+  home_phone: DataTypes.STRING(24),
+  extension: DataTypes.STRING(4),
+  photo: DataTypes.BLOB,
+  notes: DataTypes.TEXT,
+  reports_to: DataTypes.SMALLINT,
+  photo_path: DataTypes.SMALLINT,
+});
+
+Employees.belongsTo(Employees, {
+  constraints: true,
+  foreignKey: "reports_to",
 });

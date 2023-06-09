@@ -14,5 +14,5 @@
 		"resolveJsonModule": true,
 		"moduleResolution": "Node"
 	},
-	"include": ["src/**/*.ts", "src/index.ts"]
+	"include": ["src/**/*.ts", "src/index.ts", "src/database/config/credentials.js"]
 }

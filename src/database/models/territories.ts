@@ -27,8 +27,8 @@ Region.hasMany(Territories, {
   foreignKey: "region_id",
 });
 
-/* 
-(async () => {
+
+/* (async () => {
   const result = await Territories.findByPk("01581", { include: Region });
   console.log(result?.toJSON());
 })(); */

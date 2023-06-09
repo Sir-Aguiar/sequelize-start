@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import Northwind from "../database";
-
 export const Categories = Northwind.define("categories", {
   category_id: {
     type: DataTypes.SMALLINT,
